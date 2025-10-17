@@ -24,6 +24,19 @@ jobs:
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       - name: Build and push Docker image
+        env:
+          PROJECT_ID: tensile-core-474113-t6
+          REGION: us-central1
+          REPO: notely-ar-repo
         run: |
-          docker build --platform=linux/amd64 -t us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest .
-          docker push us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest
+          echo "Authenticating Docker with GCP access token..."
+          echo "$(gcloud auth print-access-token)" | docker login -u oauth2accesstoken --password-stdin https://$REGION-docker.pkg.dev
+
+          echo "Building Docker image..."
+          docker build --platform=linux/amd64 -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest .
+
+          echo "Pushing Docker image..."
+          docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest
+        #run: |
+        #  docker build --platform=linux/amd64 -t us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest .
+        #  docker push us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest
