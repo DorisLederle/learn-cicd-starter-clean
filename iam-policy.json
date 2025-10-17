@@ -1,0 +1,117 @@
+{
+  "bindings": [
+    {
+      "members": [
+        "serviceAccount:service-656178012781@gcp-sa-artifactregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/artifactregistry.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:656178012781@cloudbuild.gserviceaccount.com",
+        "serviceAccount:cloud-builder-sa@tensile-core-474113-t6.iam.gserviceaccount.com",
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com",
+        "user:dorislederle.01@gmail.com"
+      ],
+      "role": "roles/artifactregistry.writer"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@gcp-sa-cloudaicompanion.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudaicompanion.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:656178012781@cloudbuild.gserviceaccount.com",
+        "serviceAccount:cloud-builder-sa@tensile-core-474113-t6.iam.gserviceaccount.com",
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.builds.builder"
+    },
+    {
+      "members": [
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com",
+        "user:dorislederle.01@gmail.com"
+      ],
+      "role": "roles/cloudbuild.builds.editor"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+      ],
+      "role": "roles/cloudbuild.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@container-analysis.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containeranalysis.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@containerregistry.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerregistry.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@gcp-sa-containerscanning.iam.gserviceaccount.com"
+      ],
+      "role": "roles/containerscanning.ServiceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com",
+        "user:dorislederle.01@gmail.com"
+      ],
+      "role": "roles/editor"
+    },
+    {
+      "members": [
+        "serviceAccount:656178012781@cloudbuild.gserviceaccount.com",
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com"
+      ],
+      "role": "roles/iam.serviceAccountUser"
+    },
+    {
+      "members": [
+        "user:dorislederle.01@gmail.com"
+      ],
+      "role": "roles/owner"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@gcp-sa-pubsub.iam.gserviceaccount.com"
+      ],
+      "role": "roles/pubsub.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:656178012781@cloudbuild.gserviceaccount.com",
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:service-656178012781@serverless-robot-prod.iam.gserviceaccount.com"
+      ],
+      "role": "roles/run.serviceAgent"
+    },
+    {
+      "members": [
+        "serviceAccount:cloud-builder-sa@tensile-core-474113-t6.iam.gserviceaccount.com"
+      ],
+      "role": "roles/storage.admin"
+    },
+    {
+      "members": [
+        "serviceAccount:cloud-run-deployer@tensile-core-474113-t6.iam.gserviceaccount.com"
+      ],
+      "role": "roles/viewer"
+    }
+  ],
+  "etag": "BwZAyroBNEI=",
+  "version": 1
+}
