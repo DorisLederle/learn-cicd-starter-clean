@@ -21,9 +21,11 @@ jobs:
           export_default_credentials: true
 
       - name: Activate service account
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
         run: |
-          echo "Activating service account..."
-          gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
+          echo "$GCP_SA_KEY" > /tmp/key.json
+          gcloud auth activate-service-account --key-file=/tmp/key.json
           gcloud config set account "$(gcloud auth list --filter=status:ACTIVE --format='value(account)')"
           gcloud config set project tensile-core-474113-t6
 
@@ -41,4 +43,3 @@ jobs:
 
           echo "Pushing Docker image..."
           docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest
-          
