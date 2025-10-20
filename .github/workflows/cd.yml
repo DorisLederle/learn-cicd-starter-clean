@@ -50,3 +50,17 @@ jobs:
 
           echo "Pushing Docker image..."
           docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest
+
+      - name: Deploy to Cloud Run
+        env:
+          PROJECT_ID: tensile-core-474113-t6
+          REGION: us-central1
+          SERVICE: notely
+        run: |
+          echo "Deploying latest image to Cloud Run..."
+          gcloud run deploy $SERVICE \
+            --image $REGION-docker.pkg.dev/$PROJECT_ID/notely-ar-repo/notely:latest \
+            --region $REGION \
+            --allow-unauthenticated \
+            --platform managed
+            
