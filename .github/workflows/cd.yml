@@ -13,17 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Authenticate with Google Cloud
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
+      # Install the Google Cloud SDK
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: tensile-core-474113-t6
-💡
 
+      # Explicitly activate and configure the service account
       - name: Activate service account
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
@@ -33,6 +35,7 @@ jobs:
           gcloud config set account "$(gcloud auth list --filter=status:ACTIVE --format='value(account)')"
           gcloud config set project tensile-core-474113-t6
 
+      # Build and push your Docker image
       - name: Build and push Docker image
         env:
           PROJECT_ID: tensile-core-474113-t6
