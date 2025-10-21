@@ -45,22 +45,61 @@ jobs:
           echo "Authenticating Docker with GCP access token..."
           echo "$(gcloud auth print-access-token)" | docker login -u oauth2accesstoken --password-stdin https://$REGION-docker.pkg.dev
 
-          echo "Building Docker image..."
-          docker build --platform=linux/amd64 -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest .
+          VERSION_TAG=$(date +'%Y%m%d-%H%M%S')
+
+          echo "Building Docker image with tag: $VERSION_TAG"
+          docker build --platform=linux/amd64 -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:$VERSION_TAG -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest .
 
           echo "Pushing Docker image..."
+          docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:$VERSION_TAG
           docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest
 
-      - name: Deploy to Cloud Run
+          echo "Deploying $VERSION_TAG to Cloud Run..."
+          gcloud run deploy $SERVICE \
+            --image $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:$VERSION_TAG \
+            --region $REGION \
+            --allow-unauthenticated \
+            --platform managed
+
+      - name: Deploy to Cloud Run (staging)
+        env:
+          PROJECT_ID: tensile-core-474113-t6
+          REGION: us-central1
+          SERVICE: notely-staging
+        run: |
+          echo "Deploying to STAGING environment..."
+          gcloud run deploy $SERVICE \
+            --image $REGION-docker.pkg.dev/$PROJECT_ID/notely-ar-repo/notely:latest \
+            --region $REGION \
+            --allow-unauthenticated \
+            --platform managed 
+    
+  deploy-production:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: tensile-core-474113-t6
+
+      - name: Deploy to Cloud Run (production)
         env:
           PROJECT_ID: tensile-core-474113-t6
           REGION: us-central1
           SERVICE: notely
         run: |
-          echo "Deploying latest image to Cloud Run..."
+          echo "Deploying to PRODUCTION environment..."
           gcloud run deploy $SERVICE \
             --image $REGION-docker.pkg.dev/$PROJECT_ID/notely-ar-repo/notely:latest \
             --region $REGION \
             --allow-unauthenticated \
             --platform managed
-            
+          
