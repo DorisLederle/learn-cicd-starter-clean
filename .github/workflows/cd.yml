@@ -54,13 +54,6 @@ jobs:
           docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:$VERSION_TAG
           docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:latest
 
-          echo "Deploying $VERSION_TAG to Cloud Run..."
-          gcloud run deploy $SERVICE \
-            --image $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/notely:$VERSION_TAG \
-            --region $REGION \
-            --allow-unauthenticated \
-            --platform managed
-
       - name: Deploy to Cloud Run (staging)
         env:
           PROJECT_ID: tensile-core-474113-t6
