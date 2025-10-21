@@ -65,14 +65,13 @@ jobs:
         env:
           PROJECT_ID: tensile-core-474113-t6
           REGION: us-central1
-          SERVICE: notely-staging
         run: |
           echo "Deploying to STAGING environment..."
-          gcloud run deploy $SERVICE \
+          gcloud run deploy notely-staging \
             --image $REGION-docker.pkg.dev/$PROJECT_ID/notely-ar-repo/notely:latest \
             --region $REGION \
             --allow-unauthenticated \
-            --platform managed 
+            --platform managed
     
   deploy-production:
     needs: deploy
