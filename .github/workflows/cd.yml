@@ -16,13 +16,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install goose
-        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+        run: |
+          go install github.com/pressly/goose/v3/cmd/goose@latest
+          echo "${HOME}/go/bin" >> $GITHUB_PATH
 
       - name: Run database migrations
         run: |
           echo "Running database migrations..."
           ./scripts/migrateup.sh
-
 
       # Authenticate with Google Cloud
       - name: Authenticate to Google Cloud
